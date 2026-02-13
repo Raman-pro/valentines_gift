@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unrequited Love</title>
+    <style>
+        body {
+            background-color: #ffc0cb;
+            color: #8b0000;
+            font-family: 'Comic Sans MS', 'Brush Script MT', cursive, sans-serif;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            margin-top: 10vh;
+            font-size: 3rem;
+            text-align: center;
+            text-shadow: 2px 2px 0px #fff;
+        }
+
+        .love {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-family: inherit;
+            background-color: #8b0000;
+            color: #fff;
+            border: 4px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            transition: top 0s, left 0s;
+            white-space: nowrap;
+        }
+
+        #love-btn:hover {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Will you be my Valentine?</h1>
+
+    <button id="love-btn" class="love" onclick="acceptLove()">YES! (Click to accept)</button>
+    <button id="hate-btn" class="love" onclick="hateLove()">No!</button>
+
+    <script>
+        const button = document.getElementById('love-btn');
+
+        const REJECTION_RADIUS = 300;
+
+        const _0xheart = [
+            67, 84, 70, 123, 108, 48, 118, 51, 95, 105, 115, 95, 104, 52, 114, 100,
+            95, 98, 85, 116, 95, 99, 111, 100, 49, 110, 103, 95, 105, 115, 95, 104,
+            52, 114, 100, 51, 114, 125
+        ];
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            checkDistance();
+        });
+
+        button.addEventListener('mouseover', () => {
+            avoidCommitment();
+        });
+
+        function checkDistance() {
+            const rect = button.getBoundingClientRect();
+            const btnX = rect.left + rect.width / 2;
+            const btnY = rect.top + rect.height / 2;
+            const dist = Math.hypot(mouseX - btnX, mouseY - btnY);
+            if (dist < REJECTION_RADIUS) {
+                avoidCommitment();
+            }
+        }
+
+        function gameLoop() {
+            checkDistance();
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+
+        function avoidCommitment() {
+            const maxX = window.innerWidth - button.offsetWidth;
+            const maxY = window.innerHeight - button.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            button.style.transform = 'none';
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+        }
+
+        function acceptLove() {
+
+            let message = "";
+            for (let i = 0; i < _0xheart.length; i++) {
+                message += String.fromCharCode(_0xheart[i]);
+            }
+
+            alert("Uhh! she wasn't she, he was a discord moderator 🥀 but he gave you a gift:" + message);
+
+            button.textContent = "I'M YOURS <3";
+            button.disabled = true;
+            button.style.backgroundColor = "#28a745";
+            button.style.cursor = "default";
+        }
+        function hateLove() {
+            alert("I hate you too 🥀");
+        }
+    </script>
+</body>
+
+</html>
